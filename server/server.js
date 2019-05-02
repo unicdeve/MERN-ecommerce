@@ -13,6 +13,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+// MODELS
+const { User } =  require('./models/user');
+
+// =======================================
+//                USERS
+// =======================================
+app.post('api/users/register', (req, res) => {
+  res.status(200);
+})
 
 const port = process.env.PORT || 3002;
 
