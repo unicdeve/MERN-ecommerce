@@ -8,6 +8,7 @@ export default class Header extends Component {
           <div className="left">
           <div className="logo">
             WAVES
+            
           </div>
           </div>
           <div className="right">
