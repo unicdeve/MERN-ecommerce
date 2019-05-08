@@ -1,9 +1,12 @@
 import React from 'react';
+import HomeSlider from './home_slider';
+import HomePromotion from './home_promotion';
 
 const Home = () => {
   return (
     <div>
-      Home
+      <HomeSlider />
+      <HomePromotion />
     </div>
   );
 };
