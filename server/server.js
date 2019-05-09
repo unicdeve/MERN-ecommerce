@@ -26,6 +26,51 @@ const { admin } = require('./middleware/admin');
 // =======================================
 //         PRODUCTS - GUITAR
 // =======================================
+
+// Products Shop Route with Filters/Search options
+app.post('/api/product/shop', (req, res) => {
+  let body = req.body
+
+  // Additional args 
+  let order = body.order ? body.order : 'desc';
+  let sortBy = body.sortBy ? body.sortBy : 'desc';
+  // original args from the shop filters
+  let limit = body.limit ? parseInt(body.limit) : 100;
+  let skip = parseInt(body.skip);
+  let findArgs = {};
+
+  for(let key in body.filters) {
+    if(body.filters[key].length > 0) {
+      if(key === 'price') {
+        findArgs[key] = {
+          $gte: body.filters[key][0],
+          $lte: body.filters[key][1]
+        }
+      } else {
+        findArgs[key] = body.filters[key];
+      }
+    }
+  }
+
+  Product.
+  find(findArgs).
+  populate('brand').
+  populate('wood').
+  sort([[sortBy, order]]).
+  skip(skip).
+  limit(limit).
+  exec((err, articles) => {
+    if(err) return res.status(400).send(err);
+    res.status(200).json({
+      size: articles.length,
+      articles
+    })
+  })
+
+
+})
+
+
 // Create Product API
 app.post("/api/product/article", auth, admin, (req, res) => {
   const product = new Product(req.body);
