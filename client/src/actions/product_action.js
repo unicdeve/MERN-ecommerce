@@ -7,7 +7,6 @@ import {
 } from './types';
 
 import { PRODUCT_SERVER } from '../components/utils/misc';
-import { EXDEV } from 'constants';
 
 export function getProductsBySell() {
   // ?sortBy=sold&order=desc&limit=4
