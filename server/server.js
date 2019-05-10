@@ -33,7 +33,7 @@ app.post('/api/product/shop', (req, res) => {
 
   // Additional args 
   let order = body.order ? body.order : 'desc';
-  let sortBy = body.sortBy ? body.sortBy : 'desc';
+  let sortBy = body.sortBy ? body.sortBy : '_id';
   // original args from the shop filters
   let limit = body.limit ? parseInt(body.limit) : 100;
   let skip = parseInt(body.skip);
