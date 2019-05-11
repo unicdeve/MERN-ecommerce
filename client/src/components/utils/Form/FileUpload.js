@@ -40,14 +40,23 @@ class FileUpload extends Component {
   }
 
   onRemove = (id) => {
-
+    axios.get(`/api/users/removeimage?public_id=${id}`).then( res => {
+      let images = this.state.uploadedFiles.filter( item => {
+        return item.public_id !== id;
+      });
+      this.setState({
+        uploadedFiles: images
+      }, () => {
+        this.props.imagesHandler(images)
+      })
+    })
   }
 
   showUploadedImages = () => (
     this.state.uploadedFiles.map( item => (
       <div className="dropzone_box"
-        key={item.public_key}
-        onClick={() => this.onRemove(item.public_key)}
+        key={item.public_id}
+        onClick={() => this.onRemove(item.public_id)}
       >
         <div className="wrap"
           style={{
@@ -57,6 +66,16 @@ class FileUpload extends Component {
       </div>
     ))
   )
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.reset) { 
+      return  prevState = {
+        uploadedFiles: []
+      }
+    }
+    return null;
+  }
+  
 
   render() {
     return (
