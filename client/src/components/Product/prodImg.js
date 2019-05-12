@@ -47,7 +47,7 @@ export default class ProdImg extends Component {
     ))
   )
 
-  renderCardImage = images => {
+  renderCardImage = (images) => {
     if(images.length > 0) {
       return images[0].url;
     } else {
@@ -57,6 +57,8 @@ export default class ProdImg extends Component {
 
   render() {
     const { detail } = this.props;
+    console.log(detail.images);
+    
     return (
       <div className="product_image_container">
         <div className="main_pic">

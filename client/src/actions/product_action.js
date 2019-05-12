@@ -18,6 +18,7 @@ import { PRODUCT_SERVER } from '../components/utils/misc';
 export function getProductDetail(id) {
  const request = axios.get(`${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`).then(res => {
    return res.data[0]
+   
  });
 
  return {

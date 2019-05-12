@@ -113,7 +113,6 @@ app.get("/api/product/articles_by_id", (req, res) => {
   populate('brand').
   populate('wood').
   exec((err, doc) => {
-    if(err) return res.status(400).send(err)
     res.status(200).send(doc)
   })
 
@@ -274,6 +273,37 @@ app.get('/api/users/removeimage', auth, admin, (req, res) => {
   cloudinary.uploader.destroy(image_id, (error, result) => {
     if(error) return res.json({success: false, error});
     res.status(200).send("ok");
+  })
+})
+
+// AddToCart Route
+app.post('/api/users/addToCart', auth, (req, res) => {
+  User.findOne({_id: req.user._id}, (err, doc) => {
+    let duplicate = false;
+
+    doc.cart.forEach((item) => {
+      if(item.id == req.query.productId) {
+        duplicate = true;
+      }
+    })
+
+    if(duplicate) {
+
+    } else {
+      User.findOneAndUpdate(
+        { _id: req.user._id },
+        { $push: { cart: {
+          id: mongoose.Types.ObjectId(req.query.productId),
+          quantity: 1,
+          date: Date.now()
+        }}},
+        { new: true },
+        (err, doc) => {
+          if(err) return res.json({ success: false, err });
+          res.status(200).json(doc.cart)
+        }
+      )
+    }
   })
 })
 
