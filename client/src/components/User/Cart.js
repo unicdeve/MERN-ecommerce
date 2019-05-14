@@ -3,7 +3,7 @@ import UserLayout from '../../Hoc/user';
 import UserProductBlock from '../utils/User/product_block';
 
 import { connect } from 'react-redux';
-import { getCartItems } from '../../actions/user_actions';
+import { getCartItems, removeCartItem } from '../../actions/user_actions';
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faFrown from '@fortawesome/fontawesome-free-solid/faFrown';
@@ -50,8 +50,15 @@ class UserCart extends Component {
     })
   }
 
-  removeFromCart = () => {
-
+  removeFromCart = (id) => {
+    this.props.dispatch(removeCartItem(id))
+    .then(() => {
+      if(this.props.user.cartDetail.length <= 0) {
+        this.setState({ showTotal: false });
+      } else {
+        this.calculateTotal(this.props.user.cartDetail);
+      }
+    })
   }
 
   showNoItemMessage = () => (
@@ -70,7 +77,7 @@ class UserCart extends Component {
             <UserProductBlock 
               products={this.props.user}
               type="cart"
-              reomveItem={(id) => this.removeFromCart(id)}
+              removeItem={(id) => this.removeFromCart(id)}
             />
             {
               this.state.showTotal ?
