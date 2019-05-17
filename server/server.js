@@ -353,7 +353,7 @@ app.post('/api/users/successBuy', auth, (req, res) => {
   // User history
   req.body.cartDetail.forEach( item => {
     history.push({
-      dataOfPurchase: Date.now(),
+      dateOfPurchase: Date.now(),
       name: item.name,
       brand: item.brand.name,
       id: item._id,
