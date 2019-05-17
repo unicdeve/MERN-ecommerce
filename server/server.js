@@ -413,6 +413,21 @@ app.post('/api/users/successBuy', auth, (req, res) => {
   )
 })
 
+// Update user profile route
+app.post('/api/users/update_profile', auth, (req,res) => {
+  User.findByIdAndUpdate(
+    { _id: req.user._id },
+    { "$set": req.body },
+    { new: true },
+    (err, doc) => {
+      if(err) return res.json({success: false, err})
+      return res.status(200).json({
+        success: true
+      })
+    }
+  )
+})
+
 const port = process.env.PORT || 3002;
 app.listen(port, () => {
   console.log(`Server running at ${port}`)
