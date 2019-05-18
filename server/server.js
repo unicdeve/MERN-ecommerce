@@ -440,6 +440,22 @@ app.get('/api/site/site_data', (req, res) => {
   })
 });
 
+// UpdateSiteInfo route
+app.post('/api/site/site_data', auth, admin, (req, res) => {
+  Site.findOneAndUpdate(
+    { name: "Site" },
+    { "$set": { siteInfo: req.body }},
+    { new: true },
+    (err, doc) => {
+      if(err) return res.json({ success: false, err });
+      res.status(200).send({
+        success: true,
+        siteInfo: doc.siteInfo
+      })
+    }
+  )
+})
+
 
 const port = process.env.PORT || 3002;
 app.listen(port, () => {
