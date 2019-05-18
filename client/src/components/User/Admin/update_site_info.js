@@ -4,6 +4,7 @@ import FormField from '../../utils/Form/formfield';
 import { update, generateData, isFormValid, populateFields } from '../../utils/Form/formActions';
 
 import { connect } from 'react-redux';
+import { getSiteData } from '../../../actions/site_actions';
 
 
 class UpdateSiteInfo extends Component {
@@ -109,6 +110,16 @@ class UpdateSiteInfo extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.dispatch(getSiteData()).then(() => {
+      console.log(this.props.site.siteData[0])
+      const newFormdata = populateFields(this.state.formdata, this.props.site.siteData[0]);
+      this.setState({
+        formdata: newFormdata
+      })
+    })
+  }
+
   render() {
     return (
       <div>
@@ -169,4 +180,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect()(UpdateSiteInfo);
+export default connect(mapStateToProps)(UpdateSiteInfo);
