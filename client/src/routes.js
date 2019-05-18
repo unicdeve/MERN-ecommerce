@@ -17,6 +17,8 @@ import UserCart from './components/User/Cart';
 import UpdateProfile from './components/User/update_profile';
 import ManageSite from './components/User/Admin/manage_site';
 
+import PageNotFound from './components/utils/PageNotFound';
+
 const Routes = () => {
   return(
     <Layout>
@@ -33,6 +35,7 @@ const Routes = () => {
         <Route path="/register_login" exact component={Auth(RegisterLogin, false)} />
         <Route path="/shop" exact component={Auth(Shop, null)} />
         <Route path="/" exact component={Auth(Home, null)} />
+        <Route component={Auth(PageNotFound, null)} />
       </Switch>
     </Layout>
   )
